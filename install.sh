@@ -20,6 +20,53 @@ check_command brew
 echo "✓ Prérequis"
 echo
 
+echo "-> Vérification des chemins de configuration..."
+
+LAZYGIT_CONFIG_DIR="$HOME/Library/Application Support/lazygit"
+sources=(
+    zsh/{.zshrc,.zsh_aliases,.zsh_functions,.zsh_plugins,.p10k.zsh}
+    git/.gitconfig
+    lazygit/config.yml
+    yazi/{yazi.toml,keymap.toml,theme.toml}
+    nvim
+)
+destinations=(
+    "$HOME"/{.zshrc,.zsh_aliases,.zsh_functions,.zsh_plugins,.p10k.zsh}
+    "$HOME/.gitconfig"
+    "$LAZYGIT_CONFIG_DIR/config.yml"
+    "$HOME/.config/yazi"/{yazi.toml,keymap.toml,theme.toml}
+    "$HOME/.config/nvim"
+)
+
+conflicts=()
+for directory in "$HOME/.config" "$HOME/.config/yazi" \
+    "$HOME/Library" "$HOME/Library/Application Support" "$LAZYGIT_CONFIG_DIR"; do
+    if [[ ( -e "$directory" || -L "$directory" ) && ! -d "$directory" ]]; then
+        conflicts+=("$directory")
+    fi
+done
+
+for index in "${!destinations[@]}"; do
+    destination="${destinations[index]}"
+    if [[ -L "$destination" && "$(readlink "$destination")" == "$DOTFILES_DIR/${sources[index]}" ]]; then
+        continue
+    fi
+    if [[ -e "$destination" || -L "$destination" ]]; then
+        conflicts+=("$destination")
+    fi
+done
+
+local_git_config="$HOME/.gitconfig.local"
+if [[ ( -e "$local_git_config" || -L "$local_git_config" ) && ! -f "$local_git_config" ]]; then
+    conflicts+=("$local_git_config")
+fi
+
+if (( ${#conflicts[@]} > 0 )); then
+    printf 'Installation arrêtée. Déplace les chemins suivants avant de relancer :\n' >&2
+    printf '  - %s\n' "${conflicts[@]}" >&2
+    exit 1
+fi
+
 echo "-> Installation des logiciels Homebrew..."
 brew bundle --file="$DOTFILES_DIR/Brewfile"
 echo "✓ Homebrew"
@@ -27,8 +74,9 @@ echo
 
 echo "-> Vérification de la commande 'code'..."
 
-if [ -d "/Applications/Visual Studio Code.app" ] && ! command -v code >/dev/null 2>&1; then
-    ln -sf "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" \
+if [[ -d "/Applications/Visual Studio Code.app" && ! -e /opt/homebrew/bin/code && ! -L /opt/homebrew/bin/code ]] &&
+    ! command -v code >/dev/null 2>&1; then
+    ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" \
         /opt/homebrew/bin/code
 fi
 
@@ -39,18 +87,21 @@ else
 fi
 echo
 
-echo "-> Configuration de Zsh..."
-ln -sf "$DOTFILES_DIR/zsh/.zshrc" ~/.zshrc
-ln -sf "$DOTFILES_DIR/zsh/.zsh_aliases" ~/.zsh_aliases
-ln -sf "$DOTFILES_DIR/zsh/.zsh_functions" ~/.zsh_functions
-ln -sf "$DOTFILES_DIR/zsh/.zsh_plugins" ~/.zsh_plugins
-ln -sf "$DOTFILES_DIR/zsh/.p10k.zsh" ~/.p10k.zsh
-echo "✓ Zsh"
+echo "-> Création des liens de configuration..."
+mkdir -p "$LAZYGIT_CONFIG_DIR" "$HOME/.config/yazi"
+
+for index in "${!destinations[@]}"; do
+    destination="${destinations[index]}"
+    source="$DOTFILES_DIR/${sources[index]}"
+    if [[ -L "$destination" && "$(readlink "$destination")" == "$source" ]]; then
+        continue
+    fi
+    ln -s "$source" "$destination"
+done
+echo "✓ Liens de configuration"
 echo
 
 echo "-> Configuration de Git..."
-ln -sf "$DOTFILES_DIR/git/.gitconfig" ~/.gitconfig
-
 GIT_CONFIG_NEEDS_EDIT=false
 
 if [ -f "$HOME/.gitconfig.local" ]; then
@@ -93,38 +144,6 @@ else
 fi
 
 echo "✓ Git"
-echo
-
-echo "-> Configuration de Lazygit..."
-LAZYGIT_CONFIG_DIR="$HOME/Library/Application Support/lazygit"
-mkdir -p "$LAZYGIT_CONFIG_DIR"
-ln -sf \
-    "$DOTFILES_DIR/lazygit/config.yml" \
-    "$LAZYGIT_CONFIG_DIR/config.yml"
-
-echo "✓ Lazygit"
-echo
-
-echo "-> Configuration de Yazi..."
-mkdir -p ~/.config/yazi
-ln -sf "$DOTFILES_DIR/yazi/yazi.toml" ~/.config/yazi/yazi.toml
-ln -sf "$DOTFILES_DIR/yazi/keymap.toml" ~/.config/yazi/keymap.toml
-ln -sf "$DOTFILES_DIR/yazi/theme.toml" ~/.config/yazi/theme.toml
-echo "✓ Yazi"
-echo
-
-echo "-> Configuration de Neovim..."
-mkdir -p ~/.config
-
-if [ -e ~/.config/nvim ] && [ ! -L ~/.config/nvim ]; then
-    echo "Erreur : ~/.config/nvim existe déjà et n'est pas un lien symbolique."
-    echo "Déplace ou supprime ce dossier avant de relancer l'installation."
-    exit 1
-fi
-
-ln -sfn "$DOTFILES_DIR/nvim" ~/.config/nvim
-
-echo "✓ Neovim"
 echo
 
 echo "✓ Installation terminée."
