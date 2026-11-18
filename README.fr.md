@@ -6,6 +6,20 @@ Configuration de développement pour macOS Apple Silicon. Le dépôt rassemble
 les fichiers de configuration et un installateur qui vérifie les conflits
 avant de créer les liens symboliques.
 
+## Captures d’écran
+
+Captures retouchées avec des exemples fictifs.
+
+![Terminal et Powerlevel10k](docs/screenshots/terminal.png)
+
+![Accueil de LazyVim](docs/screenshots/neovim.png)
+
+![Édition Lua dans Neovim](docs/screenshots/neovim-editor.png)
+
+![Navigation dans Yazi](docs/screenshots/yazi.png)
+
+![Diff Git dans Lazygit](docs/screenshots/lazygit.png)
+
 ## Installation
 
 ### Prérequis
@@ -274,6 +288,7 @@ n’exécutent pas l’installateur macOS.
 dotfiles/
 ├── .github/workflows/shell-checks.yml
 ├── .gitignore
+├── docs/screenshots/
 ├── git/
 ├── iterm2/
 ├── lazygit/

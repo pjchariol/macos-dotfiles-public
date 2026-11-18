@@ -6,6 +6,20 @@ Development configuration for Apple Silicon Macs. The repository includes
 configuration files and an installer that checks for conflicts before creating
 symlinks.
 
+## Screenshots
+
+Edited screenshots with fictional examples.
+
+![Terminal and Powerlevel10k](docs/screenshots/terminal.png)
+
+![LazyVim dashboard](docs/screenshots/neovim.png)
+
+![Lua editing in Neovim](docs/screenshots/neovim-editor.png)
+
+![File navigation in Yazi](docs/screenshots/yazi.png)
+
+![Git diff in Lazygit](docs/screenshots/lazygit.png)
+
 ## Installation
 
 ### Prerequisites
@@ -165,6 +179,7 @@ installer.
 dotfiles/
 ├── .github/workflows/shell-checks.yml
 ├── .gitignore
+├── docs/screenshots/
 ├── git/
 ├── iterm2/
 ├── lazygit/
