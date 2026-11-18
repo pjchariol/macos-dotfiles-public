@@ -2,9 +2,9 @@
 
 [Languages / Langues](README.md) · [Français](README.fr.md) · English
 
-This repository contains my everyday macOS development configuration. It
-includes Homebrew, Zsh with Oh My Zsh and Powerlevel10k, iTerm2, Neovim with
-LazyVim, Yazi, Lazygit, FZF, Zoxide, Bat, Eza, and Visual Studio Code.
+Development configuration for Apple Silicon Macs. The repository includes
+configuration files and an installer that checks for conflicts before creating
+symlinks.
 
 ## Installation
 
@@ -55,6 +55,27 @@ the example file so you can fill it in later.
 ```
 
 The file lives in your home directory, outside the repository.
+
+## Dependencies
+
+The [Brewfile](Brewfile) installs the following tools as part of the standard
+setup. Install Git, Homebrew, Oh My Zsh, and VS Code first.
+
+- Terminal and navigation · Powerlevel10k, Zsh Autocomplete,
+  Zsh Autosuggestions, Zsh Syntax Highlighting, FZF, Zoxide, Bat, and Eza.
+- Editing and search · Neovim, Lazygit, Yazi, fd, ripgrep, jq, and the Rosé Pine
+  extension for VS Code.
+- Runtimes and previews · Node.js, Python 3.11, FFmpeg, ImageMagick, Poppler,
+  and 7-Zip.
+
+### Optional tools
+
+- iTerm2 lets you use the included color preset.
+- NVM manages multiple Node.js versions. Zsh loads it from Homebrew or
+  `NVM_DIR` (default: `~/.nvm`) when present.
+- Zsh uses OpenJDK 25 when installed through Homebrew. The `rars` alias needs
+  a `java` command and a separate `~/rars-1.7.jar` file.
+- OPAM loads only if its initialization script exists.
 
 ## Tools and configuration
 
@@ -116,10 +137,33 @@ theme, Treesitter, LSP, autocompletion, and automatic formatting.
 Bat adds syntax highlighting and line numbers when viewing files. Eza lists
 files and displays directory trees.
 
+## Customization and uninstall
+
+Edit the configuration files in the repository to update the linked files.
+Keep your Git identity in `~/.gitconfig.local`. Git ignores the local software
+inventory in `Brewfile.local`.
+
+To uninstall, use `ls -l` to inspect the symlinks. Remove only links to this
+repository and restore your backups. The links are the five Zsh files from
+the repository in your home directory, `~/.gitconfig`, `~/.config/nvim`,
+the three TOML files in `~/.config/yazi`, and `config.yml` in
+`~/Library/Application Support/lazygit`. Keep `~/.gitconfig.local` if you plan
+to reuse your Git identity. Manage Homebrew packages separately. If the script
+created the Homebrew symlink for `code`, you can remove it after checking its
+target.
+
+## Automated checks
+
+[GitHub Actions](.github/workflows/shell-checks.yml) runs ShellCheck and
+`bash -n` on the Bash scripts and `zsh -n` on the five Zsh files on every push
+and pull request. These checks run on Ubuntu and do not run the macOS
+installer.
+
 ## Repository structure
 
 ```text
 dotfiles/
+├── .github/workflows/shell-checks.yml
 ├── .gitignore
 ├── git/
 ├── iterm2/

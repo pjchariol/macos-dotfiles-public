@@ -2,38 +2,9 @@
 
 [Langues / Languages](README.md) · Français · [English](README.en.md)
 
-Bienvenue dans mon environnement de développement.
-
-Ce dépôt contient toute la configuration que j'utilise quotidiennement sur macOS
-pour développer.
-
-L'objectif n'est pas seulement d'avoir un joli terminal, mais surtout un
-environnement :
-
-- rapide
-- cohérent
-- documenté
-- reproductible
-- agréable à utiliser
-
----
-
-## Aperçu
-
-- Homebrew
-- Zsh + Oh My Zsh
-- Powerlevel10k
-- iTerm2
-- Neovim (LazyVim)
-- Yazi
-- Lazygit
-- FZF
-- Zoxide
-- Bat
-- Eza
-- VS Code
-
----
+Configuration de développement pour macOS Apple Silicon. Le dépôt rassemble
+les fichiers de configuration et un installateur qui vérifie les conflits
+avant de créer les liens symboliques.
 
 ## Installation
 
@@ -95,10 +66,32 @@ renseigner vos informations :
     email = votre@email.com
 ```
 
-> Le fichier `~/.gitconfig.local` est volontairement exclu du dépôt afin de ne
-> jamais versionner d'informations personnelles.
+Le fichier `~/.gitconfig.local` se trouve dans votre dossier personnel.
+Le dépôt contient un modèle `git/.gitconfig.local.example`.
 
 ---
+
+## Dépendances
+
+Le [Brewfile](Brewfile) installe les outils suivants lors de l’installation
+standard. Git, Homebrew, Oh My Zsh et VS Code sont à installer au préalable.
+
+- Terminal et navigation · Powerlevel10k, Zsh Autocomplete, Zsh Autosuggestions,
+  Zsh Syntax Highlighting, FZF, Zoxide, Bat et Eza.
+- Édition et recherche · Neovim, Lazygit, Yazi, fd, ripgrep, jq et l’extension
+  Rosé Pine pour VS Code.
+- Exécution et aperçu · Node.js, Python 3.11, FFmpeg, ImageMagick, Poppler
+  et 7-Zip.
+
+### Outils facultatifs
+
+- iTerm2 sert à utiliser le préréglage de couleurs fourni.
+- NVM peut gérer plusieurs versions de Node.js. Zsh le charge depuis Homebrew
+  ou depuis `NVM_DIR` (par défaut `~/.nvm`) s’il est présent.
+- OpenJDK 25 est utilisé s’il est installé via Homebrew. L’alias `rars`
+  nécessite une commande `java` et le fichier `~/rars-1.7.jar`, à fournir
+  séparément.
+- OPAM est chargé uniquement si son script d’initialisation existe.
 
 ## Outils utilisés
 
@@ -252,10 +245,34 @@ Utilisé pour l'affichage des fichiers et de l'arborescence.
 
 ---
 
+## Personnalisation et désinstallation
+
+Modifiez les fichiers de configuration dans le dépôt pour mettre à jour les
+fichiers liés. Gardez votre identité Git dans `~/.gitconfig.local`.
+L’inventaire `Brewfile.local` reste hors de Git.
+
+Pour désinstaller, vérifiez où pointent les liens avec `ls -l`. Retirez
+uniquement les liens vers ce dépôt et restaurez vos sauvegardes. Les liens
+concernés sont les cinq fichiers Zsh du dépôt à la racine du dossier personnel,
+`~/.gitconfig`, `~/.config/nvim`, les trois fichiers TOML de
+`~/.config/yazi` et `config.yml` dans
+`~/Library/Application Support/lazygit`. Conservez `~/.gitconfig.local` si vous
+souhaitez réutiliser votre identité. Les paquets Homebrew se gèrent séparément.
+Si le script a créé le lien Homebrew vers `code`, vous pouvez le retirer après
+avoir vérifié sa cible.
+
+## Contrôles automatisés
+
+[GitHub Actions](.github/workflows/shell-checks.yml) lance ShellCheck et
+`bash -n` sur les scripts Bash, puis `zsh -n` sur les cinq fichiers Zsh,
+à chaque push et pull request. Ces contrôles tournent sur Ubuntu et
+n’exécutent pas l’installateur macOS.
+
 ## Structure du dépôt
 
 ```text
 dotfiles/
+├── .github/workflows/shell-checks.yml
 ├── .gitignore
 ├── git/
 ├── iterm2/
