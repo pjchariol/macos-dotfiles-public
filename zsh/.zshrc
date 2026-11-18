@@ -78,7 +78,9 @@ plugins=(
 )
 
 # Charge Oh My Zsh avec la configuration définie ci-dessus.
-source "$ZSH/oh-my-zsh.sh"
+if [[ -r "$ZSH/oh-my-zsh.sh" ]]; then
+  source "$ZSH/oh-my-zsh.sh"
+fi
 
 
 # ------------------------------------------------------------
@@ -107,6 +109,8 @@ source "$ZSH/oh-my-zsh.sh"
 # Charge les fonctions personnelles, si elles existent.
 [[ -r "$HOME/.zsh_functions" ]] && source "$HOME/.zsh_functions"
 
+typeset _dotfiles_brew_prefix="${HOMEBREW_PREFIX:-/opt/homebrew}"
+
 # Charge fzf, zoxide et les autres plugins installés.
 [[ -r "$HOME/.zsh_plugins" ]] && source "$HOME/.zsh_plugins"
 
@@ -115,20 +119,33 @@ source "$ZSH/oh-my-zsh.sh"
 # POWERLEVEL10K
 # ------------------------------------------------------------
 # Charge le thème Powerlevel10k.
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+typeset _dotfiles_p10k="$_dotfiles_brew_prefix/share/powerlevel10k/powerlevel10k.zsh-theme"
+if [[ -r "$_dotfiles_p10k" ]]; then
+  source "$_dotfiles_p10k"
+  [[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+fi
+unset _dotfiles_p10k
 
-# Charge les choix générés par l'assistant Powerlevel10k :
-#
-#   - style du prompt
-#   - couleurs
-#   - icônes
-#   - informations affichées
-#
-# Pour relancer l'assistant :
-#
-#   p10k configure
-[[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+# ------------------------------------------------------------
+# OUTILS FACULTATIFS
+# ------------------------------------------------------------
+typeset _dotfiles_nvm="$_dotfiles_brew_prefix/opt/nvm"
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+if [[ -s "$_dotfiles_nvm/nvm.sh" ]]; then
+  source "$_dotfiles_nvm/nvm.sh"
+elif [[ -s "$NVM_DIR/nvm.sh" ]]; then
+  source "$NVM_DIR/nvm.sh"
+fi
+if (( $+functions[complete] )) && [[ -s "$_dotfiles_nvm/etc/bash_completion.d/nvm" ]]; then
+  source "$_dotfiles_nvm/etc/bash_completion.d/nvm"
+fi
 
+typeset _dotfiles_jdk="$_dotfiles_brew_prefix/opt/openjdk@25/libexec/openjdk.jdk/Contents/Home"
+if [[ -x "$_dotfiles_jdk/bin/java" ]]; then
+  export JAVA_HOME="$_dotfiles_jdk"
+  path=("$JAVA_HOME/bin" "${(@)path:#$JAVA_HOME/bin}")
+fi
+unset _dotfiles_nvm _dotfiles_jdk
 
 # ------------------------------------------------------------
 # ZSH SYNTAX HIGHLIGHTING
@@ -137,32 +154,8 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 #
 # Ce plugin doit rester à la toute fin du fichier, après tous
 # les autres plugins et toute la configuration Zsh.
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-export PATH="/opt/homebrew/opt/openjdk@25/bin:$PATH"
-export JAVA_HOME="/opt/homebrew/opt/openjdk@25/libexec/openjdk.jdk/Contents/Home"
+typeset _dotfiles_highlight="$_dotfiles_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+if [[ -r "$_dotfiles_highlight" ]]; then
+  source "$_dotfiles_highlight"
+fi
+unset _dotfiles_highlight _dotfiles_brew_prefix

@@ -29,7 +29,9 @@
 #
 # Documentation :
 #   https://github.com/junegunn/fzf
-source <(fzf --zsh)
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
 
 
 # ------------------------------------------------------------
@@ -50,7 +52,9 @@ source <(fzf --zsh)
 #
 # Documentation :
 #   https://github.com/ajeetdsouza/zoxide
-eval "$(zoxide init zsh)"
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
 
 # ============================================================
 # ZSH AUTOCOMPLETE
@@ -74,7 +78,9 @@ eval "$(zoxide init zsh)"
 # Ce plugin complète les suggestions grises de
 # zsh-autosuggestions : ils fonctionnent très bien ensemble.
 # ============================================================
-source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+if [[ -r "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]]; then
+  source "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+fi
 
 # ------------------------------------------------------------
 # ZSH AUTOSUGGESTIONS
@@ -90,4 +96,6 @@ source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 #
 # Documentation :
 #   https://github.com/zsh-users/zsh-autosuggestions
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [[ -r "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+  source "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
