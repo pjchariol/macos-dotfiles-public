@@ -1,0 +1,239 @@
+# ============================================================
+# ALIAS PERSONNELS
+# ============================================================
+# Un alias est un raccourci pour une commande.
+#
+# Exemple :
+#   alias ll='eza -lah'
+#
+# Quand on tape :
+#   ll
+#
+# Zsh exécute en réalité :
+#   eza -lah#
+#
+# Les alias sont surtout utiles pour les commandes courtes
+# et simples. Pour les commandes avec de la logique, des
+# conditions ou plusieurs étapes, il vaut mieux utiliser
+# une fonction dans ~/.zsh_functions.
+# ============================================================
+
+
+# ------------------------------------------------------------
+# CONFIGURATION ZSH
+# ------------------------------------------------------------
+
+# Ouvre le fichier principal de configuration Zsh dans
+# Visual Studio Code.
+#
+# Le fichier ouvert est celui du dépôt de dotfiles afin que
+# toutes les modifications soient directement versionnées.
+#
+# Utilisation :
+#   zshconfig
+alias zshconfig='code ~/dotfiles/zsh/.zshrc'
+
+
+# Ouvre le fichier contenant les alias personnels.
+#
+# Utilisation :
+#   aliases
+alias aliases='code ~/dotfiles/zsh/.zsh_aliases'
+
+
+# Ouvre le fichier contenant les fonctions personnelles.
+#
+# Utilisation :
+#   functions
+alias functions='code ~/dotfiles/zsh/.zsh_functions'
+
+
+# Ouvre le fichier qui charge les plugins et outils Zsh.
+#
+# Utilisation :
+#   plugins
+alias plugins='code ~/dotfiles/zsh/.zsh_plugins'
+
+
+
+# ------------------------------------------------------------
+# RARS / RISC-V
+# ------------------------------------------------------------
+
+# Lance RARS avec Java.
+#
+# Le caractère "&" exécute RARS en arrière-plan, ce qui permet
+# de continuer à utiliser le terminal après son lancement.
+#
+# Utilisation :
+#   rars
+alias rars='java -jar "$HOME/rars-1.7.jar" &'
+
+
+# ------------------------------------------------------------
+# PYTHON
+# ------------------------------------------------------------
+
+# Redirige la commande "python" vers "python3".
+#
+# Sur macOS, la commande moderne est généralement "python3".
+# Cet alias permet simplement de taper :
+#   python
+#
+# au lieu de :
+#   python3
+alias python='python3'
+
+
+# ------------------------------------------------------------
+# EZA — REMPLAÇANT MODERNE DE LS
+# ------------------------------------------------------------
+
+# Remplace "ls" par "eza".
+#
+# Utilisation :
+#   ls
+alias ls='eza'
+
+
+# Affiche tous les fichiers, y compris les fichiers cachés,
+# avec les permissions, tailles lisibles et dates.
+#
+# Options :
+#   -l : affichage détaillé
+#   -a : inclut les fichiers cachés
+#   -h : tailles lisibles, par exemple 4K ou 12M
+#
+# Utilisation :
+#   ll
+alias ll='eza -lah'
+
+
+# Affiche tous les fichiers, y compris les fichiers cachés,
+# sans le format détaillé.
+#
+# Utilisation :
+#   la
+alias la='eza -a'
+
+
+# Affiche une arborescence du dossier courant.
+#
+# Inclut les fichiers et dossiers cachés, mais masque le
+# dossier interne .git afin de garder un affichage lisible.
+#
+# Utilisation :
+#   tree
+alias tree='eza --tree --icons -a -I .git'
+
+
+# Affiche une arborescence limitée à deux niveaux.
+#
+# Inclut les fichiers et dossiers cachés, mais masque le
+# dossier interne .git.
+#
+# Utilisation :
+#   tree2
+alias tree2='eza --tree --level=2 --icons -a -I .git'
+
+
+# ------------------------------------------------------------
+# BAT — LECTURE DE FICHIERS
+# ------------------------------------------------------------
+
+# Raccourci pour "bat".
+#
+# Bat affiche les fichiers avec :
+#   - coloration syntaxique
+#   - numéros de ligne
+#   - pagination pour les fichiers longs
+#
+# On ne remplace pas "cat", car cat garde un comportement
+# standard utile dans les scripts et les pipelines.
+#
+# Utilisation :
+#   b README.md
+#   b main.ml
+#   b ~/dotfiles/zsh/.zshrc
+alias b='bat'
+
+# ============================================================
+# LAZYGIT
+# ============================================================
+# Lance l'interface graphique Git dans le terminal.
+#
+# Au lieu de taper :
+#
+#     lazygit
+#
+# Tu peux simplement écrire :
+#
+#     lg
+#
+# C'est l'alias utilisé par une grande partie de la communauté.
+# ============================================================
+
+alias lg='lazygit'
+
+# ------------------------------------------------------------
+# DOTFILES
+# ------------------------------------------------------------
+
+# Se place dans le dépôt de dotfiles.
+#
+# Utilisation :
+#   dotfiles
+alias dotfiles='cd ~/dotfiles'
+
+
+# Ouvre le dépôt de dotfiles dans Visual Studio Code.
+#
+# Utilisation :
+#   dot
+alias dot='code ~/dotfiles'
+
+# Met à jour le Brewfile du dépôt de dotfiles.
+#
+# Le script :
+#   - vérifie que Homebrew est installé
+#   - détecte automatiquement le dossier du dépôt
+#   - régénère le Brewfile avec les logiciels,
+#     applications et extensions VS Code installés
+#
+# Utilisation :
+#   brewfile
+alias brewfile='~/dotfiles/brew.sh'
+
+
+# ------------------------------------------------------------
+# ZSH
+# ------------------------------------------------------------
+
+# Recharge la configuration Zsh sans avoir à ouvrir
+# un nouveau terminal.
+#
+# Utile après une modification du .zshrc, des alias
+# ou des fonctions.
+#
+# Utilisation :
+#   reload
+alias reload='source ~/.zshrc'
+
+
+# ==============================================================================
+# ccc
+#
+# Efface complètement le contenu du terminal.
+#
+# Équivalent à :
+#   clear
+#
+# Pourquoi ?
+# - Plus rapide à taper qu'une commande complète.
+# - Très pratique après de longues sorties dans le terminal.
+#
+# Exemple :
+#   ccc
+# ==============================================================================
+
+alias ccc='clear'

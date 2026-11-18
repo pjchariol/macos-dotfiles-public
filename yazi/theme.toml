@@ -1,0 +1,179 @@
+# ------------------------------------------------------------
+# PALETTE
+# ------------------------------------------------------------
+# Background : #191724
+# Surface    : #26233a
+# Text       : #e0def4
+# Text dark  : #4b4261
+# Muted      : #6e6a86
+# Pine       : #56949f
+# Love       : #eb6f92
+# Salmon     : #e99aab
+# Rose       : #ebbcba
+# Gold       : #f6c177
+# Error      : #b4637a
+# ------------------------------------------------------------
+
+# ------------------------------------------------------------
+# FLAVOR
+# ------------------------------------------------------------
+
+[flavor]
+dark = "rose-pine"
+light = "rose-pine"
+
+# ------------------------------------------------------------
+# INTERFACE GÉNÉRALE
+# ------------------------------------------------------------
+
+[app]
+overall = { bg = "#191724" }
+
+# ------------------------------------------------------------
+# GESTIONNAIRE DE FICHIERS
+# ------------------------------------------------------------
+
+[mgr]
+cwd = { fg = "#e99aab", bold = true }
+border_style = { fg = "#4b4261" }
+symlink_target = { fg = "#56949f", italic = true }
+
+marker_selected = { fg = "#ebbcba", bg = "#ebbcba" }
+marker_marked = { fg = "#e99aab", bg = "#e99aab" }
+marker_copied = { fg = "#56949f", bg = "#56949f" }
+marker_cut = { fg = "#f6c177", bg = "#f6c177" }
+
+# ------------------------------------------------------------
+# INDICATEURS DES PANNEAUX
+# ------------------------------------------------------------
+
+[indicator]
+parent = { fg = "#56949f", bg = "#26233a" }
+current = { fg = "#4b4261", bg = "#ebbcba", bold = true }
+preview = { fg = "#ebbcba", bg = "#26233a" }
+
+# ------------------------------------------------------------
+# ONGLETS
+# ------------------------------------------------------------
+
+[tabs]
+active = { fg = "#4b4261", bg = "#ebbcba", bold = true }
+inactive = { fg = "#6e6a86", bg = "#26233a" }
+
+# ------------------------------------------------------------
+# MODES
+# ------------------------------------------------------------
+
+[mode]
+
+normal_main = { fg = "#191724", bg = "#56949f", bold = true }
+normal_alt  = { fg = "#4b4261", bg = "#ebbcba", bold = true }
+
+select_main = { fg = "#191724", bg = "#e99aab", bold = true }
+select_alt  = { fg = "#4b4261", bg = "#ebbcba", bold = true }
+
+unset_main = { fg = "#191724", bg = "#f6c177", bold = true }
+unset_alt  = { fg = "#4b4261", bg = "#ebbcba", bold = true }
+
+# ------------------------------------------------------------
+# BARRE D’ÉTAT
+# ------------------------------------------------------------
+
+[status]
+
+overall = { fg = "#e0def4", bg = "#191724" }
+
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+perm_type  = { fg = "#c4a7e7" }
+perm_read  = { fg = "#56949f" }
+perm_write = { fg = "#f6c177" }
+perm_exec  = { fg = "#eb6f92" }
+perm_sep   = { fg = "#6e6a86" }
+
+progress_normal = { fg = "#56949f", bg = "#26233a" }
+progress_error  = { fg = "#b4637a", bg = "#26233a" }
+
+# ------------------------------------------------------------
+# MENUS ET FENÊTRES
+# ------------------------------------------------------------
+
+[pick]
+border = { fg = "#e99aab" }
+active = { fg = "#4b4261", bg = "#e99aab", bold = true }
+
+[input]
+border = { fg = "#56949f" }
+title = { fg = "#ebbcba" }
+selected = { fg = "#4b4261", bg = "#e99aab", bold = true }
+
+[confirm]
+border = { fg = "#ebbcba" }
+title = { fg = "#e99aab", bold = true }
+btn_yes = { fg = "#191724", bg = "#56949f", bold = true }
+btn_no = { fg = "#191724", bg = "#b4637a", bold = true }
+
+[help]
+on = { fg = "#ebbcba", bold = true }
+run = { fg = "#56949f" }
+desc = { fg = "#e0def4" }
+hovered = { fg = "#4b4261", bg = "#e99aab", bold = true }
+
+# ------------------------------------------------------------
+# TYPES DE FICHIERS
+# ------------------------------------------------------------
+
+[filetype]
+
+rules = [
+  # Dossiers
+  { url = "*/", fg = "#6ea7b0" },
+
+  # Markdown
+  { url = "*.md", fg = "#e99aab" },
+
+  # Scripts shell
+  { url = "*.sh", fg = "#f6c177" },
+
+  # Configuration
+  { url = "*.toml", fg = "#c4a7e7" },
+  { url = "*.yml",  fg = "#c4a7e7" },
+  { url = "*.yaml", fg = "#c4a7e7" },
+  { url = "*.json", fg = "#c4a7e7" },
+
+  # Archives
+  { url = "*.zip", fg = "#f6c177" },
+  { url = "*.tar", fg = "#f6c177" },
+  { url = "*.gz",  fg = "#f6c177" },
+
+  # Images
+  { url = "*.png",  fg = "#eb6f92" },
+  { url = "*.jpg",  fg = "#eb6f92" },
+  { url = "*.jpeg", fg = "#eb6f92" },
+  { url = "*.webp", fg = "#eb6f92" },
+
+  # Tous les autres fichiers
+  { url = "*", fg = "#ebbcba" },
+]
+
+# ------------------------------------------------------------
+# ICÔNES
+# ------------------------------------------------------------
+
+[icon]
+
+prepend_globs = [
+  # Dossiers spéciaux
+  { url = ".git/",        text = "󰊢", fg = "#F1502F" },
+  { url = "git/",         text = "󰊢", fg = "#F1502F" },
+  { url = "docs/",        text = "󰈙", fg = "#519ABA" },
+  { url = "screenshots/", text = "󰋩", fg = "#A074C4" },
+  { url = "zsh/",         text = "", fg = "#F6C177" },
+  { url = "yazi/",        text = "󰇥", fg = "#56949F" },
+  { url = "lazygit/",     text = "󰊢", fg = "#F1502F" },
+  { url = "iterm2/",      text = "", fg = "#519ABA" },
+
+  # Tous les autres dossiers
+  { url = "*/", text = "", fg = "#56949F" },
+]

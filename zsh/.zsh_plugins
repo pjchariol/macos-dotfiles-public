@@ -1,0 +1,93 @@
+# ============================================================
+# PLUGINS ZSH
+# ============================================================
+#
+# Ce fichier charge les différents plugins et outils qui
+# améliorent le terminal.
+#
+# L'ordre est important !
+#
+# Certains plugins doivent être chargés avant d'autres.
+# ============================================================
+
+
+# ------------------------------------------------------------
+# FZF
+# ------------------------------------------------------------
+# Active les raccourcis clavier de fzf.
+#
+# Principaux raccourcis :
+#
+#   Ctrl + R
+#       Recherche dans l'historique des commandes.
+#
+#   Ctrl + T
+#       Recherche interactive de fichiers.
+#
+#   Option + C
+#       Recherche interactive de dossiers.
+#
+# Documentation :
+#   https://github.com/junegunn/fzf
+source <(fzf --zsh)
+
+
+# ------------------------------------------------------------
+# ZOXIDE
+# ------------------------------------------------------------
+# Remplacement intelligent de "cd".
+#
+# Plus tu visites un dossier, plus zoxide apprend
+# qu'il est important.
+#
+# Exemple :
+#
+#   z projet
+#
+# au lieu de
+#
+#   cd ~/Documents/Projets/MonProjet
+#
+# Documentation :
+#   https://github.com/ajeetdsouza/zoxide
+eval "$(zoxide init zsh)"
+
+# ============================================================
+# ZSH AUTOCOMPLETE
+# ============================================================
+# Affiche des menus de complétion interactifs pendant que tu
+# tapes une commande.
+#
+# Exemples :
+#
+#   git
+#
+# puis TAB
+#
+# -> add
+# -> branch
+# -> checkout
+# -> commit
+#
+# Tu peux naviguer avec les flèches.
+#
+# Ce plugin complète les suggestions grises de
+# zsh-autosuggestions : ils fonctionnent très bien ensemble.
+# ============================================================
+source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+# ------------------------------------------------------------
+# ZSH AUTOSUGGESTIONS
+# ------------------------------------------------------------
+# Affiche en gris les commandes déjà présentes
+# dans ton historique.
+#
+# La suggestion est acceptée avec :
+#
+#   →
+#
+# (flèche droite)
+#
+# Documentation :
+#   https://github.com/zsh-users/zsh-autosuggestions
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh

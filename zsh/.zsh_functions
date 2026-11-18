@@ -1,0 +1,178 @@
+# ============================================================
+# FONCTIONS PERSONNELLES
+# ============================================================
+# Une fonction Zsh permet d'exécuter plusieurs commandes,
+# d'utiliser des arguments, des conditions et de la logique.
+#
+# Contrairement à un alias, une fonction convient aux tâches
+# qui comportent plusieurs étapes.
+# ============================================================
+
+
+# ------------------------------------------------------------
+# GITCOMMIT
+# ------------------------------------------------------------
+# Ajoute tous les changements du dépôt Git, crée un commit,
+# puis envoie le commit vers le dépôt distant.
+#
+# Utilisation :
+#   gitcommit "Message du commit"
+#
+# Exemple :
+#   gitcommit "Ajout des tests unitaires"
+#
+# "$1" représente le premier argument donné à la fonction.
+# Ici, il correspond au message du commit.
+#
+# Les opérateurs && signifient :
+#   exécuter la commande suivante uniquement si la précédente
+#   a réussi.
+#
+# Ainsi, si git add ou git commit échoue, git push ne sera pas
+# exécuté.
+gitcommit() {
+  # Vérifie qu'un message de commit a bien été fourni.
+  if [[ -z "$1" ]]; then
+    echo 'Erreur : indique un message de commit.'
+    echo 'Utilisation : gitcommit "Message du commit"'
+    return 1
+  fi
+
+  # Vérifie que le dossier courant appartient à un dépôt Git.
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "Erreur : le dossier courant n'est pas un dépôt Git."
+    return 1
+  fi
+
+  # Ajoute tous les fichiers modifiés, supprimés ou créés.
+  git add -A &&
+
+  # Crée le commit avec le message fourni.
+  git commit -m "$1" &&
+
+  # Envoie le commit vers le dépôt distant.
+  git push
+}
+
+
+# ------------------------------------------------------------
+# UPDATEALL
+# ------------------------------------------------------------
+#
+# Met à jour l'environnement de développement.
+#
+# Étapes :
+#   1. Met à jour Homebrew
+#   2. Met à jour les logiciels installés
+#   3. Supprime les anciennes versions inutiles
+#   4. Supprime les dépendances orphelines
+#   5. Vérifie l'installation Homebrew
+#   6. Régénère le Brewfile des dotfiles
+#
+# Utilisation :
+#   updateall
+# ============================================================
+
+updateall() {
+    brew update &&
+    brew upgrade &&
+    brew cleanup &&
+    brew autoremove &&
+    brew doctor &&
+    brewfile &&
+    echo "==> Environnement mis à jour. <=="
+}
+
+
+# ------------------------------------------------------------
+# MKCD
+# ------------------------------------------------------------
+# Crée un dossier puis entre immédiatement dedans.
+#
+# Utilisation :
+#   mkcd NouveauProjet
+#
+# Équivalent à :
+#   mkdir -p NouveauProjet
+#   cd NouveauProjet
+#
+# L'option -p permet également de créer plusieurs niveaux
+# de dossiers en une seule commande.
+#
+# Exemple :
+#   mkcd ~/Documents/Projets/NouveauProjet
+mkcd() {
+  # Vérifie qu'un nom ou un chemin de dossier a été fourni.
+  if [[ -z "$1" ]]; then
+    echo "Erreur : indique le dossier à créer."
+    echo "Utilisation : mkcd nom-du-dossier"
+    return 1
+  fi
+
+  mkdir -p "$1" && cd "$1"
+}
+
+# ============================================================
+# YAZI
+# ============================================================
+# Lance le gestionnaire de fichiers Yazi.
+#
+# Contrairement à un simple lancement de Yazi, cette fonction
+# permet de revenir dans le terminal directement dans le dernier
+# dossier où tu t'es déplacé avant de quitter Yazi.
+#
+# Exemple :
+#
+#   y
+#
+# Tu navigues jusqu'à :
+#
+#   Documents/
+#      Cours/
+#         Session 6/
+#            Exercices/
+#
+# Tu quittes Yazi avec "q".
+#
+# Tu te retrouves automatiquement dans :
+#
+#   ~/Documents/Cours/Session 6/Exercices
+#
+# Sans avoir tapé un seul "cd".
+#
+# Cette fonction est celle recommandée par les développeurs
+# de Yazi.
+# ============================================================
+
+y() {
+
+    # Crée un fichier temporaire.
+    #
+    # Ce fichier sert uniquement à communiquer entre Yazi
+    # et Zsh. Lorsque tu quittes Yazi, celui-ci y écrit
+    # le chemin du dernier dossier visité.
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+
+
+    # Lance Yazi.
+    #
+    # --cwd-file indique à Yazi dans quel fichier écrire
+    # le dernier dossier visité.
+    yazi "$@" --cwd-file="$tmp"
+
+
+    # Lit le contenu du fichier temporaire.
+    #
+    # Si un chemin valide est présent ET qu'il est différent
+    # du dossier actuel, on change de dossier.
+    if cwd="$(cat "$tmp")" && [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then
+        builtin cd "$cwd"
+    fi
+
+
+    # Supprime le fichier temporaire.
+    #
+    # Il ne sert plus une fois que le changement de dossier
+    # a été effectué.
+    rm -f "$tmp"
+}

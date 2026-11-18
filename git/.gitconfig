@@ -1,0 +1,33 @@
+[user]
+    useConfigOnly = true
+
+[include]
+    path = ~/.gitconfig.local
+
+[alias]
+	adog = log --all --decorate --oneline --graph
+	adogn = --no-pager adog
+	st = status -sb
+	last = log -1 HEAD
+	undo = reset --soft HEAD~1
+
+[init]
+	defaultBranch = main
+
+[fetch]
+	prune = true
+
+[pull]
+	rebase = true
+
+[core]
+	editor = code --wait
+
+[merge]
+	conflictstyle = zdiff3
+
+[push]
+	autoSetupRemote = true
+
+[rerere]
+	enabled = true

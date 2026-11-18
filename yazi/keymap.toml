@@ -1,0 +1,57 @@
+# ============================================================
+# RACCOURCIS PERSONNALISÉS DE YAZI
+# ============================================================
+#
+# Ce fichier contient uniquement nos modifications.
+#
+# Nous ne recopions pas toute la configuration par défaut :
+# Yazi conserve ses raccourcis normaux et ajoute ceux définis
+# avec "prepend_keymap".
+#
+# Emplacement du fichier :
+#
+#   ~/.config/yazi/keymap.toml
+#
+# ============================================================
+
+
+# ------------------------------------------------------------
+# OUVRIR DANS VISUAL STUDIO CODE
+# ------------------------------------------------------------
+#
+# Utilisation dans Yazi :
+#
+#   1. Place le curseur sur un fichier ou un dossier.
+#   2. Appuie sur "g".
+#   3. Appuie ensuite sur "c".
+#
+# Exemples :
+#
+#   Si le curseur est sur un dossier :
+#       VS Code ouvre ce dossier comme projet.
+#
+#   Si le curseur est sur un fichier :
+#       VS Code ouvre directement ce fichier.
+#
+# La touche est définie comme une séquence :
+#
+#   [ "g", "c" ]
+#
+# Il ne faut donc pas appuyer sur les deux touches en même
+# temps : on appuie d'abord sur "g", puis sur "c".
+#
+# "%h" représente le chemin de l'élément actuellement survolé
+# par le curseur dans Yazi.
+#
+# Le mot-clé "shell" demande à Yazi d'exécuter une commande
+# normale du terminal.
+#
+# Les deux tirets "--" marquent le début des arguments bruts,
+# ce qui aide Yazi à gérer correctement les chemins contenant
+# des espaces.
+# ------------------------------------------------------------
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "c" ]
+run  = "shell -- code %h"
+desc = "Ouvrir dans Visual Studio Code"
