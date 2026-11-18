@@ -1,6 +1,6 @@
 # macOS Dotfiles
 
-[Français](README.md) · English
+[Languages / Langues](README.md) · [Français](README.fr.md) · English
 
 This repository contains my everyday macOS development configuration. It
 includes Homebrew, Zsh with Oh My Zsh and Powerlevel10k, iTerm2, Neovim with
@@ -131,5 +131,6 @@ dotfiles/
 ├── brew.sh
 ├── install.sh
 ├── README.en.md
+├── README.fr.md
 └── README.md
 ```
