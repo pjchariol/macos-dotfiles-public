@@ -12,11 +12,12 @@ fi
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo
-echo "→ Génération du Brewfile..."
+LOCAL_BREWFILE="$DOTFILES_DIR/Brewfile.local"
+echo "→ Génération de l’inventaire Homebrew local..."
 
 brew bundle dump \
-    --file="$DOTFILES_DIR/Brewfile" \
+    --file="$LOCAL_BREWFILE" \
     --force
 
 echo
-echo "✓ Brewfile mis à jour."
+echo "✓ Inventaire mis à jour : $LOCAL_BREWFILE"

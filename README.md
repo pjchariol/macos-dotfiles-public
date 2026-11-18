@@ -39,7 +39,7 @@ La configuration actuelle cible les Mac Apple Silicon avec Homebrew installé da
 
 - Installez Git et Homebrew, puis vérifiez que les commandes `git` et `brew` sont disponibles dans votre terminal.
 - Installez Oh My Zsh dans `~/.oh-my-zsh`, où le fichier `.zshrc` le charge.
-- Installez Visual Studio Code dans `/Applications` et rendez la commande `code` disponible avant de lancer le script. Le `Brewfile` contient les extensions VS Code à installer. Si `code` est introuvable, ouvrez la palette de commandes de VS Code et exécutez **Shell Command: Install 'code' command in PATH**, puis ouvrez un nouveau terminal.
+- Installez Visual Studio Code dans `/Applications` et rendez la commande `code` disponible avant de lancer le script. Le `Brewfile` contient l’extension Rosé Pine. Si `code` est introuvable, ouvrez la palette de commandes de VS Code et exécutez **Shell Command: Install 'code' command in PATH**, puis ouvrez un nouveau terminal.
 
 ## Installer les dotfiles
 
@@ -84,7 +84,7 @@ Si vous choisissez de ne pas le faire immédiatement, un fichier `~/.gitconfig.l
 
 ## Homebrew
 
-Gestionnaire de paquets utilisé pour installer et maintenir tous les outils de développement.
+Le `Brewfile` versionné liste les dépendances de la configuration publique. Pour exporter l’inventaire des logiciels de votre Mac, lancez `bash ./brew.sh` depuis le dépôt. Le script écrit dans `Brewfile.local`, ignoré par Git.
 
 ---
 

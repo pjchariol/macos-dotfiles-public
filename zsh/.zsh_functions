@@ -67,7 +67,7 @@ gitcommit() {
 #   3. Supprime les anciennes versions inutiles
 #   4. Supprime les dépendances orphelines
 #   5. Vérifie l'installation Homebrew
-#   6. Régénère le Brewfile des dotfiles
+#   6. Régénère l’inventaire Homebrew dans Brewfile.local
 #
 # Utilisation :
 #   updateall

@@ -192,12 +192,12 @@ alias dotfiles='cd ~/dotfiles'
 #   dot
 alias dot='code ~/dotfiles'
 
-# Met à jour le Brewfile du dépôt de dotfiles.
+# Met à jour le fichier Brewfile.local, ignoré par Git.
 #
 # Le script :
 #   - vérifie que Homebrew est installé
 #   - détecte automatiquement le dossier du dépôt
-#   - régénère le Brewfile avec les logiciels,
+#   - régénère l’inventaire local avec les logiciels,
 #     applications et extensions VS Code installés
 #
 # Utilisation :
