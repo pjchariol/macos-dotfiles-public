@@ -1,0 +1,33 @@
+name: Shell checks
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  shell:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Install validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck zsh
+
+      - name: Check Bash scripts
+        run: |
+          shellcheck install.sh brew.sh
+          for script in install.sh brew.sh; do
+            bash -n "$script"
+          done
+
+      - name: Check Zsh configuration
+        run: |
+          for script in zsh/.zshrc zsh/.zsh_aliases zsh/.zsh_functions \
+            zsh/.zsh_plugins zsh/.p10k.zsh; do
+            zsh -n "$script"
+          done
