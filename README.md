@@ -43,7 +43,7 @@ La configuration actuelle cible les Mac Apple Silicon avec Homebrew installé da
 
 ## Installer les dotfiles
 
-Cloner le dépôt dans le dossier personnel :
+Clonez le dépôt dans `~/dotfiles`. Les alias Zsh `dotfiles`, `dot` et `brewfile` utilisent ce chemin. Si vous choisissez un autre emplacement, adaptez les chemins dans [`zsh/.zsh_aliases`](zsh/.zsh_aliases).
 
 ```bash
 git clone https://github.com/pjchariol/macos-dotfiles-public.git ~/dotfiles
@@ -135,16 +135,10 @@ Installez iTerm2 séparément. Dans les réglages d’iTerm2, ouvrez **Profiles 
 
 Navigation intelligente entre les dossiers.
 
-Au lieu de :
+Après avoir visité un dossier, par exemple `~/Projets/exemple`, vous pouvez y revenir en tapant une partie de son nom.
 
 ```bash
-cd Documents/Cours/Session\ 6/TP
-```
-
-je peux simplement écrire :
-
-```bash
-z tp
+z exemple
 ```
 
 ---
@@ -233,12 +227,11 @@ Utilisé pour l'affichage des fichiers et de l'arborescence.
 
 ```
 dotfiles/
-├── docs/
+├── .gitignore
 ├── git/
 ├── iterm2/
 ├── lazygit/
 ├── nvim/
-├── screenshots/
 ├── yazi/
 ├── zsh/
 ├── Brewfile

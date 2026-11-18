@@ -127,16 +127,14 @@ mkcd() {
 #
 # Tu navigues jusqu'à :
 #
-#   Documents/
-#      Cours/
-#         Session 6/
-#            Exercices/
+#   Projets/
+#      exemple/
 #
 # Tu quittes Yazi avec "q".
 #
 # Tu te retrouves automatiquement dans :
 #
-#   ~/Documents/Cours/Session 6/Exercices
+#   ~/Projets/exemple
 #
 # Sans avoir tapé un seul "cd".
 #
