@@ -1,2 +1,3 @@
 .DS_Store
 /Brewfile.local
+.gitconfig.local

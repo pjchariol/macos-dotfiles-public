@@ -13,6 +13,10 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo
 LOCAL_BREWFILE="$DOTFILES_DIR/Brewfile.local"
+if [[ -L "$LOCAL_BREWFILE" || ( -e "$LOCAL_BREWFILE" && ! -f "$LOCAL_BREWFILE" ) ]]; then
+    printf 'Impossible de remplacer ce chemin : %s\n' "$LOCAL_BREWFILE" >&2
+    exit 1
+fi
 echo "→ Génération de l’inventaire Homebrew local..."
 
 brew bundle dump \

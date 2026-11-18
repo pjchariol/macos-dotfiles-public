@@ -4,12 +4,12 @@ set -euo pipefail
 
 check_command() {
     if ! command -v "$1" >/dev/null 2>&1; then
-        echo "Erreur : '$1' n'est pas installé."
+        printf "Erreur : '%s' n'est pas disponible dans le PATH.\n" "$1" >&2
         exit 1
     fi
 }
 
-DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 
 echo "Installation des dotfiles..."
 echo
@@ -67,24 +67,24 @@ if (( ${#conflicts[@]} > 0 )); then
     exit 1
 fi
 
+if [[ ! -r "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]]; then
+    printf 'Installe Oh My Zsh dans ~/.oh-my-zsh avant de relancer.\n' >&2
+    exit 1
+fi
+
+echo "-> Vérification de la commande 'code'..."
+if ! command -v code >/dev/null 2>&1; then
+    code_source="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+    code_destination="$(brew --prefix)/bin/code"
+    if [[ -x "$code_source" && ! -e "$code_destination" && ! -L "$code_destination" ]]; then
+        ln -s "$code_source" "$code_destination"
+    fi
+fi
+check_command code
+
 echo "-> Installation des logiciels Homebrew..."
 brew bundle --file="$DOTFILES_DIR/Brewfile"
 echo "✓ Homebrew"
-echo
-
-echo "-> Vérification de la commande 'code'..."
-
-if [[ -d "/Applications/Visual Studio Code.app" && ! -e /opt/homebrew/bin/code && ! -L /opt/homebrew/bin/code ]] &&
-    ! command -v code >/dev/null 2>&1; then
-    ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" \
-        /opt/homebrew/bin/code
-fi
-
-if command -v code >/dev/null 2>&1; then
-    echo "✓ VS Code"
-else
-    echo "⚠ La commande 'code' n'est pas disponible."
-fi
 echo
 
 echo "-> Création des liens de configuration..."
