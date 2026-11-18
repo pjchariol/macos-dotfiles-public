@@ -33,6 +33,16 @@ L'objectif n'est pas seulement d'avoir un joli terminal, mais surtout un environ
 
 # Installation
 
+## Prérequis
+
+La configuration actuelle cible les Mac Apple Silicon avec Homebrew installé dans `/opt/homebrew`.
+
+- Installez Git et Homebrew, puis vérifiez que les commandes `git` et `brew` sont disponibles dans votre terminal.
+- Installez Oh My Zsh dans `~/.oh-my-zsh`, où le fichier `.zshrc` le charge.
+- Installez Visual Studio Code dans `/Applications` et rendez la commande `code` disponible avant de lancer le script. Le `Brewfile` contient les extensions VS Code à installer. Si `code` est introuvable, ouvrez la palette de commandes de VS Code et exécutez **Shell Command: Install 'code' command in PATH**, puis ouvrez un nouveau terminal.
+
+## Installer les dotfiles
+
 Cloner le dépôt dans le dossier personnel :
 
 ```bash
@@ -48,6 +58,10 @@ chmod +x install.sh
 ```
 
 Le script installe les dépendances déclarées dans le `Brewfile` et crée les liens symboliques nécessaires pour Git, Zsh, Yazi, Lazygit et Neovim.
+
+Si le script détecte des configurations existantes en conflit, il affiche les chemins concernés et s’arrête avant l’installation. Déplacez ces fichiers vers un dossier de sauvegarde, puis relancez le script.
+
+Après l’installation, ouvrez un nouveau terminal ou exécutez `source ~/.zshrc`.
 
 ## Configuration de Git
 
@@ -113,6 +127,8 @@ Thème du terminal affichant notamment :
 
 Terminal principal utilisant le thème **Rosé Pine Moon**.
 
+Installez iTerm2 séparément. Dans les réglages d’iTerm2, ouvrez **Profiles → Colors → Color Presets**, choisissez **Import**, puis sélectionnez [iterm2/rose-pine-moon.itermcolors](iterm2/rose-pine-moon.itermcolors). Sélectionnez ensuite **Rosé Pine Moon** dans les préréglages du profil.
+
 ---
 
 ## Zoxide
@@ -174,7 +190,7 @@ Personnalisé avec le thème **Rosé Pine**.
 
 Éditeur principal.
 
-Utilise le thème **Rosé Pine Moon** pour rester cohérent avec le reste de l'environnement.
+Le `Brewfile` installe l’extension Rosé Pine. Pour activer **Rosé Pine Moon**, sélectionnez-le dans la commande **Preferences: Color Theme** de VS Code.
 
 ---
 
