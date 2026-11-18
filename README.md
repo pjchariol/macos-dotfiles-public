@@ -1,5 +1,7 @@
 # Mes Dotfiles
 
+Français · [English](README.en.md)
+
 Bienvenue dans mon environnement de développement.
 
 Ce dépôt contient toute la configuration que j'utilise quotidiennement sur macOS
@@ -264,6 +266,7 @@ dotfiles/
 ├── Brewfile
 ├── brew.sh
 ├── install.sh
+├── README.en.md
 └── README.md
 ```
 
